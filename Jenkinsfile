@@ -3,29 +3,26 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'g++ working.cpp -o output' // Compile the C++ file into an executable named 'output'
-                echo 'Build stage completed'
+                sh 'cd main && make'
+                echo 'Build Stage Successful'
             }
         }
         stage('Test') {
             steps {
-                sh './output' // Run the compiled executable to test it
-                echo 'Test stage completed'
+                sh 'cd main && ./hello_exec_nonexistent' // Error: using a non-existent executable
+                echo 'Test Stage Successful'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...' // Simulate deployment with a message
-                echo 'Deploy stage completed'
+                sh 'echo "Deploying application..."'
+                echo 'Deployment Successful'
             }
         }
     }
     post {
         failure {
-            echo 'Pipeline failed' // Display this message if any stage fails
-        }
-        success {
-            echo 'Pipeline completed successfully' // Optional: Added for confirmation
+            echo 'Pipeline failed'
         }
     }
 }
