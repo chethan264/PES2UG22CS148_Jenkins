@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'g++ working.cpp -o output' // Compile the C++ file
+                build 'YOUR_SRN-1' // Trigger the first job from Task 2
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './output' // Run the compiled executable
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deployment Successful' // Simulate deployment
+            }
+        }
+    }
+    post {
+        failure {
+            echo 'Pipeline failed' // Display message if any stage fails
+        }
+    }
+}
